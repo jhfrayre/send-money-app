@@ -1,0 +1,73 @@
+version: "3.8"
+
+services:
+  ### CONTAINERS ###
+  payment-service:
+    build:
+      context: payment-service/api
+      dockerfile: ./Dockerfile
+    container_name: "payment-service"
+    volumes:
+      - ./payment-service/api/src:/var/www/html
+      # - ./payment-service/api/src/vendor:/var/www/html/vendor
+    ## Expose the API for debugging
+    # ports:
+      # - "9001:9001"
+
+  payment-service-nginx:
+    build:
+      context: payment-service/nginx
+      dockerfile: ./Dockerfile
+    container_name: "payment-service-nginx"
+    ports:
+      - "8070:80"
+    links:
+      - payment-service
+
+  payment-db-adminer:
+    image: adminer:latest
+    container_name: "payment-db-adminer"
+    environment:
+      ADMINER_DEFAULT_SERVER: payment-sql
+    ports:
+      - 8083:8080
+    depends_on:
+      - payment-sql
+
+  payment-sql:
+    image: mysql:8.0.33-debian
+    container_name: "payment-sql"
+    ports:
+      - 8080:3306
+    environment:
+      MYSQL_ROOT_USER: root
+      MYSQL_ROOT_PASSWORD: admin123
+      MYSQL_USER: payment-service
+      MYSQL_PASSWORD: payment-sql
+    volumes:
+      - payment-app-data-volume:/var/lib/mysql
+
+  payment-app:
+    build:
+      context: payment-app/web
+      dockerfile: ./Dockerfile
+    container_name: "payment-app"
+    volumes:
+      - ./payment-app/web/src:/var/www/html
+      # - ./payment-app/web/src/vendor:/var/www/html/vendor
+    ## Expose the app for debugging
+    # ports:
+    #  - "9003:9003"
+
+  payment-app-nginx:
+    build:
+      context: payment-app/nginx
+      dockerfile: ./Dockerfile
+    container_name: "payment-app-nginx"
+    ports:
+      - "8077:80"
+    links:
+      - payment-app
+
+volumes:
+  payment-app-data-volume:
