@@ -21,8 +21,8 @@ services:
     container_name: "payment-service-nginx"
     ports:
       - "8070:80"
-    links:
-      - payment-service
+    # links:
+    #   - payment-service
 
   payment-db-adminer:
     image: adminer:latest
@@ -43,31 +43,29 @@ services:
       MYSQL_ROOT_USER: root
       MYSQL_ROOT_PASSWORD: admin123
       MYSQL_USER: payment-service
-      MYSQL_PASSWORD: payment-sql
+      MYSQL_PASSWORD: payment-pass
     volumes:
       - payment-app-data-volume:/var/lib/mysql
+      - ./payment-service/database:/docker-entrypoint-initdb.d
 
-  payment-app:
-    build:
-      context: payment-app/web
-      dockerfile: ./Dockerfile
-    container_name: "payment-app"
-    volumes:
-      - ./payment-app/web/src:/var/www/html
-      # - ./payment-app/web/src/vendor:/var/www/html/vendor
+  # payment-app:
+  #   build:
+  #     context: payment-app/web
+  #     dockerfile: ./Dockerfile
+  #   container_name: "payment-app"
+  #   volumes:
+  #     - ./payment-app/web/src:/var/www/html
     ## Expose the app for debugging
     # ports:
     #  - "9003:9003"
 
-  payment-app-nginx:
-    build:
-      context: payment-app/nginx
-      dockerfile: ./Dockerfile
-    container_name: "payment-app-nginx"
-    ports:
-      - "8077:80"
-    links:
-      - payment-app
+  # payment-app-nginx:
+  #   build:
+  #     context: payment-app/nginx
+  #     dockerfile: ./Dockerfile
+  #   container_name: "payment-app-nginx"
+  #   ports:
+  #     - "8077:80"
 
 volumes:
   payment-app-data-volume:

@@ -26,6 +26,15 @@ docker container restart payment-service
 docker exec -ti payment-app php artisan key:generate
 docker container restart payment-app
 ```
+5. Install other dependencies and run migrations
+```
+docker exec -it payment-service sh ./install.sh
+```
+
+## Testing
+```
+docker exec -it payment-service ./vendor/bin/pest
+```
 
 ## Services
 Payment App - http://localhost:8077/
