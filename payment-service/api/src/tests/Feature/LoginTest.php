@@ -28,3 +28,11 @@ test('authenticated user can access the dashboard', function () {
         ->get('/api/user')
         ->assertOk();
 });
+
+it('prevents access when inputting wrong password')
+    ->post('/api/login', [
+        'email' => 'test@example.com',
+        'password' => 'wrong_password'
+        ]
+    )->assertStatus(401)
+    ->assertJson(['message' => 'Invalid credentials']);
