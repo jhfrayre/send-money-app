@@ -5,6 +5,7 @@ use App\Domain\ValueObjects\UserId;
 test('UserId is instantiable', function () {
     $userId = new UserId(1);
     expect($userId->value())->toBeInt()->toBe(1);
+    expect($userId instanceof UserId)->toBe(true);
     $userId = UserId::make(1);
     expect($userId->value())->toBeInt()->toBe(1);
     expect($userId instanceof UserId)->toBeTrue();

@@ -18,7 +18,7 @@ class UserRepository implements UserRepositoryInterface
             ->insertGetId([
                 'user_id' => $userId->value(),
                 'is_success' => $isSuccess,
-                'timestamp' => $now->format('Y-m-d H:i:s')
+                'created_at' => $now->format('Y-m-d H:i:s')
                 ]
             );
         return $lastInsertId;

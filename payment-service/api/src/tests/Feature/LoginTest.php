@@ -1,15 +1,14 @@
 <?php
 
 use App\Models\User;
-use function Pest\Laravel\{actingAs};
 
 it('has API login page')->post('/api/login')
     ->assertStatus(401)
     ->assertJson(['message' => 'Invalid credentials']);
 
 it('returns token upon successful login', function () {
-    $response = $this->post('/api/login', [
-        'email' => 'test@example.com',
+    $response = $this->postJson('/api/login', [
+        'username' => 'test@example.com',
         'password' => 'password'
     ]);
     $response->assertOk();
@@ -19,8 +18,8 @@ it('returns token upon successful login', function () {
 });
 
 test('authenticated user can access the dashboard', function () {
-    $response = $this->post('/api/login', [
-        'email' => 'test@example.com',
+    $response = $this->postJson('/api/login', [
+        'username' => 'test@example.com',
         'password' => 'password'
     ]);
     $token = $response->getData('token'); // ['token' => 'eyj...']
@@ -30,8 +29,8 @@ test('authenticated user can access the dashboard', function () {
 });
 
 it('prevents access when inputting wrong password')
-    ->post('/api/login', [
-        'email' => 'test@example.com',
+    ->postJson('/api/login', [
+        'username' => 'test@example.com',
         'password' => 'wrong_password'
         ]
     )->assertStatus(401)

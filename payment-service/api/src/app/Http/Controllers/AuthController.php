@@ -20,10 +20,9 @@ class AuthController extends Controller
     public function login(Request $request)
     {
         $now = new DateTimeImmutable('now');
-        $email = $request->email;
         $credentials = [
-            'email' => $request->email,
-            'password' => $request->password
+            'email' => $request->request->get('username'),
+            'password' => $request->request->get('password')
         ];
 
         if (auth()->attempt($credentials)) {
@@ -31,7 +30,7 @@ class AuthController extends Controller
             $userId = UserId::make($user->getAuthIdentifier());
             $token = $user->createToken('accessToken')->accessToken;
             $this->userRepo->logUserLogin($userId, $now);
-            return response()->json(['token' => $token], 200);
+            return response()->json(['user' => $user, 'token' => $token], 200);
         } else {
             $user = User::where('email', '=', $request->email)->first();
             if (isset($user) && is_int($user->getAuthIdentifier())) {
@@ -46,11 +45,5 @@ class AuthController extends Controller
     {
         $request->user()->token()->revoke();
         return response()->json(['message' => 'Logged out'], 200);
-    }
-
-    public function userInfo(Request $request)
-    {
-        $user = $request->user();
-        return response()->json(['user' => $user], 200);
     }
 }

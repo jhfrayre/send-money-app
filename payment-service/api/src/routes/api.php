@@ -1,6 +1,10 @@
 <?php
 
-use App\Http\Controllers\AuthController;
+use App\Http\Controllers\{
+    AuthController,
+    TransactionController,
+    UserController
+};
 use Illuminate\Http\Request;
 use Illuminate\Routing\Router;
 use Illuminate\Support\Facades\Route;
@@ -31,5 +35,6 @@ Route::group([
     'middleware' => ['auth:api']
 ], function (Router $router) {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/user', [AuthController::class, 'userInfo'])->name('user');
+    Route::get('/user', [UserController::class, 'userInfo'])->name('user');
+    Route::get('/transaction-history', [TransactionController::class, 'userTransactionHistory'])->name('transaction-history');
 });
