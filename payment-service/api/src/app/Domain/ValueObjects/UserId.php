@@ -1,4 +1,6 @@
-<?php declare(strict_types = 1);
+<?php
+
+declare(strict_types=1);
 
 namespace App\Domain\ValueObjects;
 
@@ -7,10 +9,11 @@ use \TypeError;
 
 class UserId
 {
-    protected $id;
+    protected int $id;
 
     /**
-     * Please use the static make() method instead
+     * Please use the static make() method instead to avoid passing boolean values
+     *
      * @param int $id
      * @return UserId
      * @throws TypeError

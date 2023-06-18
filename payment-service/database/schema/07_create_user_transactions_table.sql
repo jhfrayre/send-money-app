@@ -9,8 +9,8 @@ CREATE TABLE `user_transactions` (
   `beginning_balance` decimal(9,2) unsigned NOT NULL,
   `ending_balance` decimal(9,2) unsigned NOT NULL,
   `description` varchar(100) COMMENT "e.g. Deposit, Send Money, etc.",
-  `timestamp` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
   PRIMARY KEY (`id`),
-  KEY `key_user_payment` (`user_id`, `payment_system_id`, `timestamp`)
+  KEY `key_user_payment` (`user_id`, `payment_system_id`, `created_at`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci
 COMMENT "Primary table containing all transactions initiated by the users";
