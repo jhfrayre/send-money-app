@@ -1,7 +1,5 @@
 <?php
 
-use App\Models\User;
-
 it('sends financial institution data', function () {
     $response = $this->postJson('/api/login', [
         'username' => 'test@example.com',
