@@ -1,6 +1,6 @@
 <?php
 
-use App\Domain\ValueObjects\TransactionParticipant;
+use App\Domain\ValueObjects\{TransactionParticipant, UserId};
 
 test('TransactionParticipant is instantiable', function () {
     $directTransfer = '{"user":{"user_id":17,"email":"test@example.com"}}';
@@ -12,7 +12,8 @@ test('TransactionParticipant fromJson path="user"', function () {
     $directTransfer = '{"user":{"user_id":17,"email":"test@example.com"}}';
     $participant = TransactionParticipant::fromJson($directTransfer);
     expect($participant->path())->toBeString()->toBe('user');
-    expect($participant->userId())->toBeInt()->toBe(17);
+    expect($participant->userId() instanceof UserId)->toBe(true);
+    expect($participant->userId()->value())->toBeInt()->toBe(17);
 
     expect($participant->financialInstitutionId())->toBe(null);
     expect($participant->financialInstitutionName())->toBe(null);

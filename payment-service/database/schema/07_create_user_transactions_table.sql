@@ -1,7 +1,7 @@
 CREATE TABLE `user_transactions` (
   `id` bigint(9) unsigned NOT NULL AUTO_INCREMENT COMMENT "Reference Number",
   `user_id` bigint unsigned NOT NULL COMMENT "users.id",
-  `payment_system_id` int unsigned NOT NULL COMMENT "payment_system_id",
+  `payment_system_id` int unsigned NOT NULL COMMENT "payment_systems.id",
   `type` tinyint(2) signed NOT NULL COMMENT "-1 = Credit; +1 = Debit",
   `payee` json NULL DEFAULT NULL COMMENT "Details on the entity receiving the payment",
   `payer` json NULL DEFAULT NULL COMMENT "Details on the entity making the payment",

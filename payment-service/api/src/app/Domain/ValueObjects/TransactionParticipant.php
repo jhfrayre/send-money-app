@@ -11,7 +11,7 @@ class TransactionParticipant
     public const VIA_BANK_TRANSFER = 'bank';
 
     protected $path;
-    protected ?int $userId = null;
+    protected ?UserId $userId = null;
     protected ?string $userEmail = null;
     protected ?int $financialInstitutionId = null;
     protected ?string $financialInstitutionName = null;
@@ -23,7 +23,7 @@ class TransactionParticipant
         if (isset($details[self::DIRECT_TO_USER])) {
             $participant = $details[self::DIRECT_TO_USER];
             $this->path = self::DIRECT_TO_USER;
-            $this->userId = $participant['user_id'];
+            $this->userId = UserId::make($participant['user_id']);
             $this->userEmail = $participant['email'];
         } elseif (isset($details[self::VIA_BANK_TRANSFER])) {
             $participant = $details[self::VIA_BANK_TRANSFER];
@@ -47,7 +47,7 @@ class TransactionParticipant
             case self::DIRECT_TO_USER:
                 $data = [
                     $this->path() => [
-                        'user_id' => $this->userId(),
+                        'user_id' => $this->userId()->value(),
                         'email' => $this->userEmail()
                     ]
                 ];
@@ -75,7 +75,7 @@ class TransactionParticipant
         return $this->path;
     }
 
-    public function userId(): ?int
+    public function userId(): ?UserId
     {
         return $this->userId;
     }

@@ -9,6 +9,7 @@ class PaymentSystem
 {
     public const INSTAPAY = 1;
     public const PESONET = 2;
+    public const THIS_SERVICE = 3;
 
     protected int $id;
     protected ?string $name;

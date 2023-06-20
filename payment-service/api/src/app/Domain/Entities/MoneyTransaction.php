@@ -86,6 +86,15 @@ class MoneyTransaction implements MoneyTransactionInterface
     }
 
     /**
+     * Allows to update the balance after initialization,
+     * particularly used when starting the database transaction
+     */
+    public function setBeginningBalance(float $balance)
+    {
+        $this->beginningBalance = $balance;
+    }
+
+    /**
      * @return float $endingBalance
      * @throws TypeError when isValid() === false
      */
@@ -119,6 +128,11 @@ class MoneyTransaction implements MoneyTransactionInterface
     public function status(): int
     {
         return $this->status;
+    }
+
+    public function setStatus(int $status)
+    {
+        $this->status = $status;
     }
 
     public function payee(): ?TransactionParticipant

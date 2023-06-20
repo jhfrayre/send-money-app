@@ -4,17 +4,19 @@ namespace App\Http\Controllers;
 
 use App\Domain\ValueObjects\UserId;
 use App\Domain\Repositories\UserRepository;
-use App\Models\User;
+use App\Models\User as UserModel;
 use \DateTimeImmutable;
 use Illuminate\Http\Request;
 
 class AuthController extends Controller
 {
+    protected $userModel;
     protected $userRepo;
 
-    public function __construct(UserRepository $userRepo)
+    public function __construct(UserRepository $userRepo, UserModel $userModel)
     {
         $this->userRepo = $userRepo;
+        $this->userModel = $userModel;
     }
 
     public function login(Request $request)
@@ -32,7 +34,7 @@ class AuthController extends Controller
             $this->userRepo->logUserLogin($userId, $now);
             return response()->json(['user' => $user, 'token' => $token], 200);
         } else {
-            $user = User::where('email', '=', $request->email)->first();
+            $user = $this->userModel->where('email', '=', $request->email)->first();
             if (isset($user) && is_int($user->getAuthIdentifier())) {
                 $userId = UserId::make($user->getAuthIdentifier());
                 $this->userRepo->logUserLogin($userId, $now, $isSuccess = false);

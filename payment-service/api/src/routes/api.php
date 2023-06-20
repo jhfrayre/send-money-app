@@ -2,6 +2,7 @@
 
 use App\Http\Controllers\{
     AuthController,
+    HelperController,
     TransactionController,
     UserController
 };
@@ -36,5 +37,9 @@ Route::group([
 ], function (Router $router) {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/user', [UserController::class, 'userInfo'])->name('user');
+    Route::get('/financial-institutions', [HelperController::class, 'institutions'])->name('financial-institutions');
+
     Route::get('/transaction-history', [TransactionController::class, 'userTransactionHistory'])->name('transaction-history');
+    Route::post('/send-money', [TransactionController::class, 'sendMoneyToUser'])->name('send-money');
+    Route::post('/bank-transfer', [TransactionController::class, 'bankTransfer'])->name('bank-transfer');
 });
