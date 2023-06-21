@@ -27,4 +27,13 @@ class UserController extends Controller
 
         return response()->json(['user' => $user], 200);
     }
+
+    public function doesUserExist(string $email)
+    {
+        $user = $this->userRepo->findByEmail($email);
+        if (isset($user)) {
+            return response()->json(['message' => 'User exists'], 200);
+        }
+        return response()->json(['message' => 'User not found'], 404);
+    }
 }

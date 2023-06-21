@@ -7,5 +7,7 @@ use \DateTimeInterface;
 
 interface UserRepositoryInterface
 {
+    public function findByEmail(string $email);
+
     public function logUserLogin(UserId $userId, DateTimeInterface $now);
 }

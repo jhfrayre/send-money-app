@@ -78,7 +78,10 @@ class TransactionController extends Controller
             $senderTransaction->setPayee($recipientObject);
         }
 
-        if ($senderTransaction->isValid() && $senderTransaction->payee() instanceof TransactionParticipant) {
+        if ($senderTransaction->isValid() &&
+            $senderTransaction->payee() instanceof TransactionParticipant &&
+            $recipientUserId->value() !== $userId->value() //Prevent sending money to self
+        ) {
             try {
                 $completedAt = new DateTimeImmutable('now');
                 $senderTransaction = $this->transactionService->sendMoneyToUser(

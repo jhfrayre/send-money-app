@@ -37,6 +37,8 @@ Route::group([
 ], function (Router $router) {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/user', [UserController::class, 'userInfo'])->name('user');
+
+    Route::get('/user-exists/{email}', [UserController::class, 'doesUserExist'])->name('user-exists');
     Route::get('/financial-institutions', [HelperController::class, 'institutions'])->name('financial-institutions');
 
     Route::get('/transaction-history', [TransactionController::class, 'userTransactionHistory'])->name('transaction-history');

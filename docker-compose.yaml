@@ -9,7 +9,6 @@ services:
     container_name: "payment-service"
     volumes:
       - ./payment-service/api/src:/var/www/html
-      # - ./payment-service/api/src/vendor:/var/www/html/vendor
     ## Expose the API for debugging
     # ports:
       # - "9001:9001"
@@ -21,8 +20,6 @@ services:
     container_name: "payment-service-nginx"
     ports:
       - "8070:80"
-    # links:
-    #   - payment-service
 
   payment-db-adminer:
     image: adminer:latest
@@ -47,25 +44,6 @@ services:
     volumes:
       - payment-app-data-volume:/var/lib/mysql
       - ./payment-service/database:/docker-entrypoint-initdb.d
-
-  # payment-app:
-  #   build:
-  #     context: payment-app/web
-  #     dockerfile: ./Dockerfile
-  #   container_name: "payment-app"
-  #   volumes:
-  #     - ./payment-app/web/src:/var/www/html
-    ## Expose the app for debugging
-    # ports:
-    #  - "9003:9003"
-
-  # payment-app-nginx:
-  #   build:
-  #     context: payment-app/nginx
-  #     dockerfile: ./Dockerfile
-  #   container_name: "payment-app-nginx"
-  #   ports:
-  #     - "8077:80"
 
 volumes:
   payment-app-data-volume:
