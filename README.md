@@ -3,7 +3,7 @@ A sample application that can send money to users using Laravel as the API and V
 
 ## Prerequisites
 The version numbers only serve as guides. The exact version is not necessarily required.
-- Docker Desktop or Docker Community Edition (Docker CE v24.02)
+- Docker Desktop or Docker Community Edition (Docker CE v24.0 (rootless))
 - Composer (v2.2.6)
 
 ## Setup
@@ -66,6 +66,13 @@ Alternatively, you can run Bash interactively and run the tests
 docker exec -it payment-service bash
 
 bash-5.1# ./vendor/bin/pest
+```
+
+## Development Helpers
+```bash
+## Payment App
+npm run format
+npm run lint
 ```
 
 ## Services

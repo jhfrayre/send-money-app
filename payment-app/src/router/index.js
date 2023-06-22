@@ -23,12 +23,12 @@ const router = createRouter({
     {
       path: '/login',
       name: 'Login',
-      component: () => import('../views/Login.vue')
+      component: () => import('../views/LogIn.vue')
     },
     {
       path: '/logout',
       name: 'Logout',
-      component: () => import('../views/Logout.vue')
+      component: () => import('../views/LogOut.vue')
     },
     {
       path: '/send-money',
