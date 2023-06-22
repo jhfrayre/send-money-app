@@ -33,6 +33,7 @@
       <label>Bank</label>&nbsp;&nbsp;&nbsp;
       <select
         id="BankTransfer_bank"
+        ref="bank"
         name="financial_institution_id"
         v-model="financial_institution_id"
       >
@@ -88,7 +89,7 @@ export default {
     async validate() {
       let hasErrors = false
 
-      const bankName = document.getElementById('BankTransfer_bank')
+      const bankName = this.$refs.bank
       this.bank_name = bankName.options[bankName.selectedIndex].text
 
       if (this.payment_system_id == this.bankStore.instapayId) {

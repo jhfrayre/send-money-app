@@ -124,6 +124,7 @@ INSERT INTO `financial_institutions` (name, short_name, type) VALUES ("Gpay Netw
 INSERT INTO `financial_institutions` (name, short_name, type) VALUES ("I-Remit, Inc.", NULL, 5);
 INSERT INTO `financial_institutions` (name, short_name, type) VALUES ("Infoserve, Inc.", NULL, 5);
 INSERT INTO `financial_institutions` (name, short_name, type) VALUES ("Lulu Financial Services (Phils.), Inc.", NULL, 5);
+INSERT INTO `financial_institutions` (name, short_name, type) VALUES ("Maya Philippines, Inc.", NULL, 5);
 INSERT INTO `financial_institutions` (name, short_name, type) VALUES ("OmniPay, Inc.", NULL, 5);
 INSERT INTO `financial_institutions` (name, short_name, type) VALUES ("Paymongo Payments, Inc.", NULL, 5);
 INSERT INTO `financial_institutions` (name, short_name, type) VALUES ("Philippine Digital Asset Exchange, Inc.", NULL, 5);

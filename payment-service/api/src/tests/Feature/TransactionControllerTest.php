@@ -66,5 +66,4 @@ it('sends money via bank transfer', function () {
                 ]
             ],
         ])->assertStatus(200);
-});
-// ->skip('A manual data refresh is required for this test'); //Refresh database is not yet implemented
+})->skip('A manual data refresh is required for this test'); //Refresh database is not yet implemented
