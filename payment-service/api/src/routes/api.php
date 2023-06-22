@@ -1,5 +1,6 @@
 <?php
 
+use App\Domain\Repositories\HelperRepository;
 use App\Http\Controllers\{
     AuthController,
     HelperController,
@@ -39,7 +40,11 @@ Route::group([
     Route::get('/user', [UserController::class, 'userInfo'])->name('user');
 
     Route::get('/user-exists/{email}', [UserController::class, 'doesUserExist'])->name('user-exists');
-    Route::get('/financial-institutions', [HelperController::class, 'institutions'])->name('financial-institutions');
+    Route::get('/financial-institutions/{paymentSystemId?}', function (int $paymentSystemId = null) {
+        $helperRepo = new HelperRepository();
+        $helper = new HelperController($helperRepo);
+        return $helper->institutions($paymentSystemId);
+    })->name('financial-institutions');
 
     Route::get('/transaction-history', [TransactionController::class, 'userTransactionHistory'])->name('transaction-history');
     Route::post('/send-money', [TransactionController::class, 'sendMoneyToUser'])->name('send-money');

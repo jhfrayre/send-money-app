@@ -57,13 +57,14 @@ it('sends money via bank transfer', function () {
             'amount' => '367.51',
             'payment_system_id' => '1',
             'payment_system_name' => 'InstaPay',
-            'recipient' => json_encode([
+            'recipient' => [
                 'bank' => [
                     'financial_institution_id' => 8,
                     'bank_name' => 'Bank of the Philippine Islands',
                     'account_number' => '123456789',
                     'account_name' => 'Bank Transfer Recipient',
                 ]
-            ]),
+            ],
         ])->assertStatus(200);
-})->skip('A manual data refresh is required for this test'); //Refresh database is not yet implemented
+});
+// ->skip('A manual data refresh is required for this test'); //Refresh database is not yet implemented

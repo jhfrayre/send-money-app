@@ -121,7 +121,7 @@ class TransactionController extends Controller
         );
         $senderTransaction->setDescription('Send money via ' . $paymentSystem->name());
 
-        $recipient = TransactionParticipant::fromJson($requestData->get('recipient'));
+        $recipient = new TransactionParticipant($requestData->get('recipient'));
         $senderTransaction->setPayee($recipient);
 
         if ($senderTransaction->isValid() && $senderTransaction->payee() instanceof TransactionParticipant) {

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Domain\Repositories\HelperRepository;
+use App\Domain\ValueObjects\PaymentSystem;
 use Illuminate\Http\Request;
 
 class HelperController extends Controller
@@ -14,9 +15,13 @@ class HelperController extends Controller
         $this->helperRepo = $helperRepo;
     }
 
-    public function institutions()
+    public function institutions($paymentSystemId)
     {
-        $data = $this->helperRepo->findACHParticipants();
+        $paymentSystem = null;
+        if (is_int($paymentSystemId)) {
+            $paymentSystem = new PaymentSystem($paymentSystemId);
+        }
+        $data = $this->helperRepo->findACHParticipants($paymentSystem);
         return response()->json(['financial-institutions' => $data], 200);
     }
 }

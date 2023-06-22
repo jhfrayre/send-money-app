@@ -12,7 +12,6 @@
 
 <script>
 import { useUserStore } from '../store/user'
-import { RouterLink } from 'vue-router'
 export default {
   setup() {
     const userStore = useUserStore()

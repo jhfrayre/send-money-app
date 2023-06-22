@@ -1,5 +1,5 @@
 <template>
-  <div id="SendToUser_result"></div>
+  <div id="SendToUser_result">{{ submitResult }}</div>
   <form id="SendToUser_form" @submit.prevent="validate">
     <label>Email</label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
     <input id="SendToUser_email" type="email" v-model="email" />
@@ -16,6 +16,7 @@
       placeholder="0.00"
       required
     />
+    <div id="SendToUser_amount_error" class="error">{{ amountError }}</div>
     <br />
     <button type="submit">Send</button>
   </form>
@@ -29,17 +30,33 @@ export default {
     return {
       email: '',
       amount: '0.00',
-      emailError: ''
+
+      emailError: '',
+      amountError: '',
+      submitResult: '',
+
+      userStore: useUserStore()
     }
   },
-  async created() {},
   methods: {
     async validate() {
-      const amountInput = document.getElementById('SendToUser_amount')
-      amountInput.value = parseFloat(amountInput.value).toFixed(2)
+      this.amount = parseFloat(this.amount).toFixed(2)
 
-      const userStore = useUserStore()
-      const token = userStore.token
+      const userEmail = this.userStore.user.email
+      const userBalance = parseFloat(this.userStore.user.balance)
+      this.emailError = ''
+      this.amountError = ''
+      if (this.email === userEmail) {
+        this.emailError = 'This is your email. Please send to another user.'
+      }
+      if (this.amount > userBalance) {
+        this.amountError = 'Amount is greater than your current balance.'
+      }
+
+      if (this.emailError.length > 0 || this.amountError.length > 0) {
+        return false
+      }
+      const token = this.userStore.token
       const res = await fetch(
         import.meta.env.VITE_PAYMENT_SERVICE_API + '/user-exists/' + this.email,
         {
@@ -53,13 +70,11 @@ export default {
       if (res.status === 200) {
         this.sendToUser()
       } else {
-        const errorMsg = 'Email does not belong to a user.'
-        this.emailError = errorMsg
+        this.emailError = 'Email does not belong to a user.'
       }
     },
     async sendToUser() {
-      const userStore = useUserStore()
-      const token = userStore.token
+      const token = this.userStore.token
       const res = await fetch(import.meta.env.VITE_PAYMENT_SERVICE_API + '/send-money', {
         method: 'POST',
         headers: {
@@ -68,28 +83,13 @@ export default {
         },
         body: JSON.stringify({ email: this.email, amount: this.amount })
       })
-      const resultDiv = document.getElementById('SendToUser_result')
       if (res.status === 200) {
-        resultDiv.innerText = 'Success! Check your transacion history.'
+        this.submitResult = 'Success! Please your transaction history.'
+        this.userStore.fetchUser()
       } else {
-        resultDiv.innerText = 'Oops! Something went wrong.'
-        console.log(response)
+        this.submitResult = 'Oops! Something went wrong.'
       }
     }
   }
 }
 </script>
-
-<style>
-/* Chrome, Safari, Edge, Opera */
-input::-webkit-outer-spin-button,
-input::-webkit-inner-spin-button {
-  -webkit-appearance: none;
-  margin: 0;
-}
-
-/* Firefox */
-input[type='number'] {
-  appearance: textfield;
-}
-</style>

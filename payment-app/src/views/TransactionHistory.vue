@@ -2,13 +2,15 @@
   <table id="TransactionHisory_tbl">
     <thead>
       <tr>
+        <th>Date and Time</th>
         <th>Description</th>
         <th>Amount</th>
         <th>Balance</th>
       </tr>
     </thead>
     <tbody>
-      <tr v-for="transaction in transactionHistory">
+      <tr v-for="(transaction, index) in transactionHistory" :key="index">
+        <td>{{ transaction.date_time }}</td>
         <td>{{ transaction.description }}</td>
         <td>{{ transaction.amount }}</td>
         <td>{{ transaction.ending_balance }}</td>
@@ -41,7 +43,18 @@ export default {
         }
       })
       const response = await res.json()
-      this.transactionHistory = response.transactions
+      let transactionHistory = response.transactions
+      response.transactions.forEach(function (currentValue, index) {
+        let datetimeString = currentValue.created_at
+        let [dateString, timeString] = datetimeString.split(' ')
+        let [year, month, day] = dateString.split('-')
+        let [hour, minute, second] = timeString.split(':')
+
+        let utcTimestamp = Date.UTC(year, month - 1, day, hour, minute, second)
+        let datetime = new Date(utcTimestamp)
+        transactionHistory[index]['date_time'] = datetime.toLocaleString()
+      })
+      this.transactionHistory = transactionHistory
     }
   }
 }
