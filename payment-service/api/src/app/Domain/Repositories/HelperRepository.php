@@ -15,7 +15,8 @@ class HelperRepository implements HelperRepositoryInterface
             ->join('payment_systems', 'payment_systems.id', '=', 'payment_system_id')
             ->select('financial_institution_id', 'financial_institutions.name AS bank_name', 'short_name',
                 'type', 'payment_system_id', 'payment_systems.name AS payment_system_name', 'role', 'is_deactivated'
-            );
+            )->where('is_deactivated', '=', '0')
+            ->whereIn('role', [1, 2]);
         if (isset($paymentSystem)) {
             $query->where('payment_system_id', '=', $paymentSystem->id());
         }
