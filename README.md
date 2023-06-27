@@ -1,5 +1,5 @@
 # send-money-app
-A sample application that can send money to users using Laravel as the API and Vue as the frontend.
+A sample application that can send money to users using Laravel as the API and Vue as the frontend. Services run in Docker containers and are accessible via NGINX reverse proxies.
 
 ## Prerequisites
 The version numbers only serve as guides. The exact version is not necessarily required.

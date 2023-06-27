@@ -2,7 +2,7 @@
   <form @submit.prevent="validate">
     <div>
       <div id="BankTransfer_result">{{ submitResult }}</div>
-      <label class="" style="padding-right: 73px;">Amount</label>
+      <label class="" style="padding-right: 73px">Amount</label>
       <input
         id="BankTransfer_amount"
         type="number"

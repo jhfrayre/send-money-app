@@ -17,9 +17,17 @@ jobs:
           node-version: '18'
           cache: npm
           cache-dependency-path: /home/runner/work/send-money-app/send-money-app/payment-app/web/package-lock.json
-      - name: NPM Install
+      - name: Install Node
+        working-directory: ./payment-app/web
+        run: npm install
+      - name: Run linter
+        working-directory: ./payment-app/web
+        run: npm run lint
+      - name: Format the codes and compare
         working-directory: ./payment-app/web
         run: |
-          npm install
-          npm run lint
           npm run format
+          if ! git diff --exit-code; then
+            echo "Code formatting issues detected. Please run 'npm run format' and commit the changes."
+            exit 1
+          fi
