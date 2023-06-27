@@ -22,13 +22,7 @@ jobs:
         run: npm install
       - name: Run linter
         working-directory: ./payment-app/web
-        run: |
-          npm run lint
-          LINT_EXIT_CODE=$?
-          if [ ! npm run lint ]; then
-            echo "Linter detected issues. Please run `npm run lint` and then fix the errors"
-            exit $LINT_EXIT_CODE
-          fi
+        run: npm run lint
       - name: Format the codes and compare
         working-directory: ./payment-app/web
         run: |
