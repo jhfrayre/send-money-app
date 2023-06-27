@@ -70,7 +70,7 @@ npm run lint
 
 ## Services
 ```
-Payment App - http://localhost:5173/
+Payment App - http://localhost:8073/
 Payment Service - http://localhost:8070/
 ```
 
