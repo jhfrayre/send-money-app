@@ -19,7 +19,9 @@ jobs:
           cache-dependency-path: /home/runner/work/send-money-app/send-money-app/payment-app/web/package-lock.json
       - name: NPM Install
         working-directory: ./payment-app/web
+        run: npm install
+      - name: Format the codes and compare
+        working-directory: ./payment-app/web
         run: |
-          npm install
-          npm run lint
           npm run format
+          git diff --exit-code
