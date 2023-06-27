@@ -22,12 +22,18 @@ jobs:
         run: npm install
       - name: Run linter
         working-directory: ./payment-app/web
-        run: npm run lint
+        run: |
+          npm run lint
+          LINT_EXIT_CODE=$?
+          if [ ! npm run lint ]; then
+            echo "Linter detected issues. Please run `npm run lint` and then fix the errors"
+            exit $LINT_EXIT_CODE
+          fi
       - name: Format the codes and compare
         working-directory: ./payment-app/web
         run: |
           npm run format
           if ! git diff --exit-code; then
-            echo "Code formatting issues detected. Please run 'npm run format' and commit the changes."
+            echo "Code formatting issues detected. Please run `npm run format`` and commit the changes."
             exit 1
           fi
