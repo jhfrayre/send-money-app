@@ -16,7 +16,7 @@ jobs:
         with:
           node-version: '18'
           cache: npm
-          cache-dependency-path: ../package-lock.json
+          cache-dependency-path: /home/runner/work/send-money-app/send-money-app/payment-app/web/package-lock.json
       - name: NPM Install
         working-directory: ./payment-app/web
         run: |
