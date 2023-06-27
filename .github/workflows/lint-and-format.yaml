@@ -1,0 +1,24 @@
+name: payment-app-linter-and-formatter
+run-name: ${{ github.actor }} is linting and formatting Payment App
+on:
+  push:
+    branches:
+      - main
+      - develop
+jobs:
+  lint-and-format:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+      - name: Setup node
+        uses: actions/setup-node@v3
+        with:
+          node-version: '18'
+          cache: npm
+      - name: NPM Install
+        run: |
+          cd payment-app/web
+          npm install
+          npm run lint
+          npm run format
