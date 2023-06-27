@@ -21,4 +21,4 @@ WORKDIR /var/www/html
 COPY ./src /var/www/html
 RUN composer install --prefer-dist
 
-CMD sh startup.sh
+ENTRYPOINT php artisan serve --host=0.0.0.0 --port=9001

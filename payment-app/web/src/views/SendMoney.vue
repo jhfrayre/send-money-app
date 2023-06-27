@@ -8,7 +8,6 @@
     </div>
     <br />
     <br />
-    <br />
     <div v-if="sendToUser"><SendToUserForm /></div>
     <div v-else><BankTransferForm /></div>
   </div>
@@ -49,5 +48,15 @@ input::-webkit-inner-spin-button {
 /* Firefox */
 input[type='number'] {
   appearance: textfield;
+}
+
+.pr15 {
+  padding-right: 15px;
+}
+.pr30 {
+  padding-right: 30px;
+}
+.mt10 {
+  margin-top: 10px;
 }
 </style>

@@ -2,6 +2,24 @@ version: "3.8"
 
 services:
   ### CONTAINERS ###
+  payment-app:
+    build:
+      context: ./payment-app/web
+      dockerfile: ./Dockerfile
+    container_name: "payment-app"
+    volumes:
+      - ./payment-app/web:/var/www/html
+    ports:
+      - 5173:5173
+
+  payment-app-nginx:
+    build:
+      context: payment-app/nginx
+      dockerfile: ./Dockerfile
+    container_name: "payment-app-nginx"
+    ports:
+      - 8073:80
+
   payment-service:
     build:
       context: payment-service/api
@@ -11,7 +29,7 @@ services:
       - ./payment-service/api/src:/var/www/html
     ## Expose the API for debugging
     # ports:
-      # - "9001:9001"
+      # - 9001:9001
 
   payment-service-nginx:
     build:
@@ -19,7 +37,7 @@ services:
       dockerfile: ./Dockerfile
     container_name: "payment-service-nginx"
     ports:
-      - "8070:80"
+      - 8070:80
 
   payment-db-adminer:
     image: adminer:latest
