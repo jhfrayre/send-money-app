@@ -17,8 +17,7 @@
       required
     />
     <div id="SendToUser_amount_error" class="error">{{ amountError }}</div>
-    <br />
-    <button type="submit">Send</button>
+    <button type="submit" class="mt10">Send</button>
   </form>
 </template>
 
@@ -47,10 +46,10 @@ export default {
       this.emailError = ''
       this.amountError = ''
       if (this.email === userEmail) {
-        this.emailError = 'This is your email. Please send to another user.'
+        this.emailError = '❗This is your email. Please send to another user.'
       }
       if (this.amount > userBalance) {
-        this.amountError = 'Amount is greater than your current balance.'
+        this.amountError = '❗Amount is greater than your current balance.'
       }
 
       if (this.emailError.length > 0 || this.amountError.length > 0) {
@@ -70,7 +69,7 @@ export default {
       if (res.status === 200) {
         this.sendToUser()
       } else {
-        this.emailError = 'Email does not belong to a user.'
+        this.emailError = '❗Email does not belong to a user.'
       }
     },
     async sendToUser() {
@@ -87,7 +86,7 @@ export default {
         this.submitResult = 'Success! Please your transaction history.'
         this.userStore.fetchUser()
       } else {
-        this.submitResult = 'Oops! Something went wrong.'
+        this.submitResult = '❗Oops! Something went wrong.'
       }
     }
   }

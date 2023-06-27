@@ -49,13 +49,6 @@ Password: payment-pass
 Database: payments_db
 ```
 
-7. Run the Payment App
-```bash
-cd payment-app
-npm install
-npm run dev
-```
-
 ## Testing
 #### NOTE: Please note that running tests currently inputs into the database without refreshing.
 ```bash

@@ -2,7 +2,7 @@
   <form @submit.prevent="validate">
     <div>
       <div id="BankTransfer_result">{{ submitResult }}</div>
-      <label>Amount</label>&nbsp;&nbsp;&nbsp;
+      <label class="" style="padding-right: 73px;">Amount</label>
       <input
         id="BankTransfer_amount"
         type="number"
@@ -18,24 +18,26 @@
     </div>
 
     <div>
-      <label for="BankTransfer_payment">Payment Service</label>&nbsp;&nbsp;&nbsp;
+      <label for="BankTransfer_payment" class="pr15">Payment Service</label>
       <select
         id="BankTransfer_payment"
         name="payment_system_id"
         v-model="payment_system_id"
         @change="modifyParticipants()"
+        style="width: 183px"
       >
         <option :value="bankStore.instapayId">InstaPay</option>
         <option :value="bankStore.pesonetId">PESONet</option>
       </select>
     </div>
     <div>
-      <label>Bank</label>&nbsp;&nbsp;&nbsp;
+      <label class="" style="padding-right: 94px">Bank</label>
       <select
         id="BankTransfer_bank"
         ref="bank"
         name="financial_institution_id"
         v-model="financial_institution_id"
+        style="max-width: 183px"
       >
         <option
           v-for="(institution, index) in participants"
@@ -47,14 +49,14 @@
       </select>
     </div>
     <div>
-      <label>Account Number</label>&nbsp;&nbsp;&nbsp;
+      <label class="pr15">Account Number</label>
       <input type="text" v-model="account_number" maxlength="19" required />
     </div>
     <div>
-      <label>Account Name</label>&nbsp;&nbsp;&nbsp;
+      <label class="pr30">Account Name</label>
       <input type="text" v-model="account_name" maxlength="35" required />
     </div>
-    <button type="submit">Send</button>
+    <button type="submit" class="mt10">Send</button>
   </form>
 </template>
 
@@ -102,7 +104,7 @@ export default {
       const userBalance = parseFloat(this.userStore.user.balance)
       if (this.amount > userBalance) {
         hasErrors = true
-        this.amountError = 'Amount is greater than your current balance.'
+        this.amountError = '❗Amount is greater than your current balance.'
       }
 
       if (hasErrors === false) {
